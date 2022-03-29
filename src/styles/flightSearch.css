@@ -1,0 +1,57 @@
+label{
+    text-align: left;
+}
+
+.btn-search{
+    background-color: black;
+    color: white;
+    width: 200px;
+    height: 35px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.flightContainer{
+
+    margin-top: 50px;
+
+    min-height: 100px;
+    min-width: 700px;
+
+    padding: 20px;
+    border-radius: 15px;
+
+    background-color: #e0edb5;
+
+    font-size: 20px;
+}
+
+.plane-icon-holder{
+    padding: 15px 15px;
+}
+
+.select-flight-btn{
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 5px 25px;
+    text-align: center;
+    font-size: 15px;
+    cursor: pointer;
+    opacity: 0.8;
+    margin-top: 15px;
+}
+
+.form-fields{
+    width: 200px;
+    height: 35px;
+    font-size: 20px;
+}
+
+.flight-form-label{
+    font-size: 18px;
+}
+
+.searchForm{
+    margin: 35px;
+}

@@ -1,7 +1,7 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import FlightSearch from "./components/flightSearch";
-import CustomerBookings from './components/userBookings';
+import BookFlight from './components/booking';
 import UserProfile from "./components/userProfile";
 import PurchaseSeat from "./components/purchaseSeat";
 import Login from "./components/login";
@@ -15,7 +15,7 @@ function App() {
             <Route path="/" element={<Login/>}></Route>
             <Route path="/signUp" element={<SignUp/>}></Route>
             <Route path="/searchFlights" element={<FlightSearch/>}></Route>
-            <Route path="/booking" element={<CustomerBookings/>}></Route>
+            <Route path="/booking" element={<BookFlight/>}></Route>
             <Route path="/purchaseSeats" element={<PurchaseSeat/>}></Route>
             <Route path="/profile" element={<UserProfile/>}></Route>
             <Route path="/myBookings" element={<UserBookings/>}></Route>
