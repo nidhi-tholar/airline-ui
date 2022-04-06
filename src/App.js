@@ -7,6 +7,7 @@ import PurchaseSeat from "./components/purchaseSeat";
 import Login from "./components/login";
 import SignUp from "./components/signup";
 import UserBookings from "./components/userBookings";
+import AdminFlightStatus from "./components/adminFlightStatus";
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
             <Route path="/purchaseSeats" element={<PurchaseSeat/>}></Route>
             <Route path="/profile" element={<UserProfile/>}></Route>
             <Route path="/myBookings" element={<UserBookings/>}></Route>
+
+            <Route path="/adminFlightStatus" element={<AdminFlightStatus/>}></Route>
         </Routes>
     </div>
   );

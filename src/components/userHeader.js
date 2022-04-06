@@ -19,7 +19,7 @@ const UserNavBar = () =>{
 
                 <Navbar bg="dark" variant="dark" sticky="top" expand="lg">
                 <Container>
-                    <Navbar.Brand href="#home">FlyIndigo</Navbar.Brand>
+                    <Navbar.Brand href="/searchFlights">FlyIndigo</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
@@ -27,7 +27,7 @@ const UserNavBar = () =>{
                         <NavDropdown.Item  href="/myBookings"> My Bookings  </NavDropdown.Item>
                         <NavDropdown.Item href="/profile"> My Profile </NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item href="/"> Logout</NavDropdown.Item>
+                        <NavDropdown.Item href="/" onClick={()=> {localStorage.removeItem('token');}}> Logout</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                     </Navbar.Collapse>

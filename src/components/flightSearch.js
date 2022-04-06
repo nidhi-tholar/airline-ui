@@ -1,125 +1,42 @@
 import UserNavBar from "./userHeader";
 import '../styles/flightSearch.css';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { serverBaseUrl } from "../environment/environment";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlane } from '@fortawesome/fontawesome-free-solid';
 
-const FlightSearch = () =>{
+import { timeConversion, calculateDuration } from "../util";
 
-    const flightsResp = [
-        {
-            "aircraft": {
-                "id": "6184aa07c2bf805a6ec51679",
-                "name": "Airbus A320"
-            },
-            "arrival_airport": {
-                "city": "San Jose",
-                "code": "SJC",
-                "id": "61849d3f4367d925b16ff24b",
-                "name": "San Jose International Airport"
-            },
-            "arrival_date": "Sun, 09 Jan 2022 12:20:00 GMT",
-            "arrival_time": "12:20",
-            "departure_airport": {
-                "city": "San Francisco",
-                "code": "SFO",
-                "id": "61849d5f4367d925b16ff24c",
-                "name": "San Francisco International Airport"
-            },
-            "departure_date": "Sun, 09 Jan 2022 11:00:00 GMT",
-            "departure_time": "11:00",
-            "flight_num": "AA3457",
-            "flight_status": "scheduled",
-            "id": "61a26d7d500dc3da968da8f1",
-            "price": "40.00",
-            "remaining_seats": 59,
-            "seat_chart": {
-                "aisle": [
-                    "1A",
-                    "2A"
-                ],
-                "middle": [
-                    "1B"
-                ],
-                "window": [
-                    "W1",
-                    "W2"
-                ]
-            },
-            "seat_price": {
-                "aisle": 3,
-                "middle": 0,
-                "window": 5
-            },
-            "seats": {
-                "aisle": 20,
-                "middle": 19,
-                "window": 16
-            }
-        },
-        {
-            "aircraft": {
-                "id": "6184aa07c2bf805a6ec51679",
-                "name": "Airbus A320"
-            },
-            "arrival_airport": {
-                "city": "San Jose",
-                "code": "SJC",
-                "id": "61849d3f4367d925b16ff24b",
-                "name": "San Jose International Airport"
-            },
-            "arrival_date": "Sun, 09 Jan 2022 12:20:00 GMT",
-            "arrival_time": "12:20",
-            "departure_airport": {
-                "city": "San Francisco",
-                "code": "SFO",
-                "id": "61849d5f4367d925b16ff24c",
-                "name": "San Francisco International Airport"
-            },
-            "departure_date": "Sun, 09 Jan 2022 11:00:00 GMT",
-            "departure_time": "11:00",
-            "flight_num": "AA3457",
-            "flight_status": "scheduled",
-            "id": "61a26d7d500dc3da968da8f2",
-            "price": "40.00",
-            "remaining_seats": 59,
-            "seat_chart": {
-                "aisle": [
-                    "1A",
-                    "2A"
-                ],
-                "middle": [
-                    "1B"
-                ],
-                "window": [
-                    "W1",
-                    "W2"
-                ]
-            },
-            "seat_price": {
-                "aisle": 3,
-                "middle": 0,
-                "window": 5
-            },
-            "seats": {
-                "aisle": 20,
-                "middle": 19,
-                "window": 16
-            }
-        }
-    ]
+
+const FlightSearch = () =>{
 
     const [flights, setFlights] = useState([]);
     const [showResult, setShowResult] = useState(false);
 
-    const searchFlights = (e) => {
+    const searchFlights = (e, departureAirport, arrivalAirport, departureDate) => {
         e.preventDefault();
-        setFlights(flightsResp);
         setShowResult(true);
+
+        const url =serverBaseUrl+"/flight";
+        const token = localStorage.getItem('token');
+
+        axios.get(url,
+                    {params: {depart_date:departureDate.toLocaleDateString('en-CA'), 
+                              airport1:departureAirport, 
+                              airport2:arrivalAirport}
+                    },
+                    {headers: {"Authorization" : `Bearer ${token}`}}
+                 )
+            .then((response)=>{
+                setFlights(response.data);
+            }).catch((error)=>{
+                console.log(error.response.data.message)
+            })
     }
 
    return (
@@ -140,44 +57,6 @@ const NoFlights = () => {
 }
 
 const Flight = (props) => {
-
-    const timeConversion = (time) => {
-        var suffix = time.slice(0,2) >= 12 ? "PM":"AM";
-        var hours = (( Number(time.slice(0,2)) + 11) % 12 + 1) + time.slice(2,5) +  " " + suffix
-        return hours;
-    }
-
-    const calculateDuration = (arrTime, deptTime) => {
-        arrTime = new Date(arrTime);
-        deptTime = new Date(deptTime);
-        let diffInMilliSeconds = Math.abs(arrTime - deptTime) / 1000;
-
-          // calculate days
-        const days = Math.floor(diffInMilliSeconds / 86400);
-        diffInMilliSeconds -= days * 86400;
-        console.log('calculated days', days);
-
-        // calculate hours
-        const hours = Math.floor(diffInMilliSeconds / 3600) % 24;
-        diffInMilliSeconds -= hours * 3600;
-        console.log('calculated hours', hours);
-
-        // calculate minutes
-        const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
-        diffInMilliSeconds -= minutes * 60;
-        console.log('minutes', minutes);
-
-        let difference = '';
-        if (days > 0) {
-        difference +=  `${days} d`;
-        }
-
-        difference += (hours === 0 || hours === 1) ? `${hours}h ` : `${hours}h `;
-
-        difference += (minutes === 0 || hours === 1) ? `${minutes}m` : `${minutes} m`; 
-
-        return difference;
-    }
     
     return (
         <div className="flightContainer">
@@ -196,13 +75,13 @@ const Flight = (props) => {
                                     <div >{timeConversion(props.flight.departure_time)}</div>
                                 </div>
                                 <div className="col-md-6">
-                                <div >{timeConversion(props.flight.arrival_time)}</div>
+                                    <div >{timeConversion(props.flight.arrival_time)}</div>
                                 </div>
                             </div>
                         </div>
 
                         <div className="col-md-3">
-                            <div>{calculateDuration(props.flight.arrival_date, props.flight.departure_date)}</div>
+                            <div>{calculateDuration(props.flight.departure_date, props.flight.departure_time, props.flight.arrival_date, props.flight.arrival_time)}</div>
                         </div>
 
                         <div className="col-md-3">
@@ -238,31 +117,30 @@ const Flight = (props) => {
                     </Link>
                 </div>
             
-            </div>
-
-            
+            </div>  
         </div>
     )
 }
 
 const FlightSeacrhInput = (props) => {
 
+    const [airports, setAirports] = useState([]);
+    const [departureAirport, setDepartureAirport] = useState("");
+    const [arrivalAirport, setarrivalAirport] = useState("");
+    const [departureDate, setDepartureDate] = useState(new Date());
 
-const airports=[{
-    "code" : "SJC",
-    "name" : "San Jose International Airport",
-    "city" : "San Jose"
-    },
-    {
-    "code" : "SFO",
-    "name" : "San Francisco International Airport",
-    "city" : "San Francisco"
-    }          
-]
-
-const [departureAirport, setDepartureAirport] = useState("");
-const [arrivalAirport, setarrivalAirport] = useState("");
-const [departureDate, setDepartureDate] = useState(new Date());
+    useEffect(()=>{
+        const url =serverBaseUrl+"/airport";
+        const token = localStorage.getItem('token');
+    
+        axios.get(url, {headers: {"Authorization" : `Bearer ${token}`}})
+        .then((response)=>{
+            setAirports(response.data);
+        })
+        .catch((error)=>{
+            console.log(error.response.data.message)
+        });
+    },[])
 
     return (
         <div className="searchForm">
@@ -288,14 +166,14 @@ const [departureDate, setDepartureDate] = useState(new Date());
                 <div className="col-md-3">         
                     <select className="form-fields" value={departureAirport} onChange={(e)=>{setDepartureAirport(e.target.value)}} id="departureAirport" name="departureAirport">
                         <option value="" disabled selected hidden>Origin City</option>
-                        {airports.map( (airport) => { return <option value={airport.code}>{airport.city}</option>})}
+                        {airports.map( (airport) => { return <option value={airport.id}>{airport.city}</option>})}
                     </select>
                 </div>
 
                 <div className="col-md-3">         
                     <select className="form-fields" value={arrivalAirport} onChange={(e)=>{setarrivalAirport(e.target.value)}} id="arrivalAirport" name="arrivalAirport">
                         <option value="" disabled selected hidden>Destination City</option>
-                        {airports.filter(airport => airport.code !== departureAirport).map( (airport) => { return <option value={airport.code}>{airport.city}</option>})}
+                        {airports.filter(airport => airport.id !== departureAirport).map( (airport) => { return <option value={airport.id}>{airport.city}</option>})}
                     </select>
                 </div>
 
@@ -304,7 +182,7 @@ const [departureDate, setDepartureDate] = useState(new Date());
                 </div>
 
                 <div className="col-md-3">         
-                    <input onClick={(e) => props.searchFlights(e)} class="btn-search" type="submit" value="Search Flights"></input>
+                    <input onClick={(e) => props.searchFlights(e, departureAirport, arrivalAirport, departureDate)} class="btn-search" type="submit" value="Search Flights"></input>
                 </div>
             </div>
         </form>

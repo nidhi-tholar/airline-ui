@@ -35,7 +35,7 @@ const SignUp = () => {
                     </div>
 
                     <div className="loginInfo">
-                        <span>Have an account? <Link to="/"><span>Login</span></Link></span>
+                        <span>Have an account? <Link to="/"><span style={{color:"black", textDecoration:"none"}}>Login</span></Link></span>
                     </div>
                 </div>
             </form>

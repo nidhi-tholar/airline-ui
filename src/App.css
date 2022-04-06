@@ -1,5 +1,5 @@
 .form{
-  background-color: #9ea9be;
+  background-color: #e0edb5;
   width: 400px;
   min-height: 300px;
   border-radius: 10px;
@@ -36,7 +36,8 @@ input{
   padding: 2px 12px;
   width: 100px;
   margin-top: 8px;
-  background-color: white;
+  background-color: black;
+  color: white;
 }
 
 .loginInfo{
