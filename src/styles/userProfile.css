@@ -1,0 +1,50 @@
+.userProf-container{
+    position: fixed;
+    top:15%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+
+    background-color: #e0edb5;
+    width: 450px;
+    height: 450px;
+}   
+
+.userProf-header{
+    background-color: #212529;
+    padding: 10px 0px;
+    color: white; 
+    text-align: center;
+    opacity: 0.9;
+    font-size: 20px;
+    font-size: 25px;
+}
+
+.userProf-details{
+    font-size: 22px;
+    margin-top: 30px;
+}
+
+.labels{
+    width: 180px;
+    margin-left: 50px;
+}
+
+.circle {
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    border-radius: 50%;
+    font-size: 30px;
+    color: #fff;
+    text-align: center;
+    background: #212529;
+    margin-left: 180px;
+  }
+
+.user-elements{
+    margin-top: 20px;
+}
+
+.userName{
+    text-transform: capitalize;
+}

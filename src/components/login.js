@@ -55,7 +55,7 @@ const Login = () => {
                     </div>
 
                     <div className="loginInfo">
-                        <span>Don't have an account? <Link to="/signUp"><span style={{color:"black", textDecoration:"none"}}>Sign Up</span></Link></span>
+                        <span>Don't have an account?<Link to="/signUp"><span style={{color:"black", textDecoration:"none"}}>Sign Up</span></Link></span>
                     </div>
                 </div>
             </form>

@@ -147,15 +147,15 @@ const FlightSeacrhInput = (props) => {
         <form>
             <div className="row">
                 <div className="col-md-3">
-                    <label className="flight-form-label">From</label>
+                    <span className="flight-form-label">From</span>
                 </div>
 
                 <div className="col-md-3">
-                    <label className="flight-form-label">To</label>
+                    <span className="flight-form-label">To</span>
                 </div>
 
                 <div className="col-md-3">
-                    <label className="flight-form-label">Date</label>
+                    <span className="flight-form-label">Date</span>
                 </div>
 
                 <div className="col-md-3">

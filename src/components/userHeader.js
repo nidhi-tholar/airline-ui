@@ -23,9 +23,9 @@ const UserNavBar = () =>{
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
-                        <NavDropdown title="Nidhi" id="basic-nav-dropdown">
+                        <NavDropdown title="John" id="basic-nav-dropdown">
                         <NavDropdown.Item  href="/myBookings"> My Bookings  </NavDropdown.Item>
-                        <NavDropdown.Item href="/profile"> My Profile </NavDropdown.Item>
+                        <NavDropdown.Item href="/profile"> My Account </NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="/" onClick={()=> {localStorage.removeItem('token');}}> Logout</NavDropdown.Item>
                         </NavDropdown>
